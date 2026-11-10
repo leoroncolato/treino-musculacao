@@ -12,6 +12,8 @@ export default defineConfig(({ mode }) => {
     worker: {
       name: live ? "treino-bella" : "treino-bella-local",
       compatibilityDate: "2026-11-04",
+      workersDev: false,
+      previewUrls: false,
       entrypoint,
       assets: {
         notFoundHandling: "single-page-application",
