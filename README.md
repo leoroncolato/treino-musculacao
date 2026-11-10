@@ -1,5 +1,7 @@
 # Treino Bella
 
+**Em produção:** https://treino.leonardoroncolato.com.br — [relatório de publicação](DEPLOYMENT_REPORT.md).
+
 Aplicação mobile-first para uma ficha pública de hipertrofia com histórico privado, registro local-first e sincronização D1 protegida por Cloudflare Access.
 
 ## Desenvolvimento
@@ -78,4 +80,4 @@ Runtime: React/React DOM (interface), Lucide React (ícones ISC), Motion (anima�
 
 **Demonstrações pendentes:** todos os exercícios têm placeholder com orientação e link de referência. Nenhuma fotografia/GIF sem autoria/licença comprovadas foi copiada. Pesquisa e checklist em [MEDIA_SOURCES.md](MEDIA_SOURCES.md).
 
-Build preparado para Workers Static Assets, domínio e Access, mas produção exige configuração da conta, autorização e validação conforme [DEPLOY.md](DEPLOY.md). Resultado dos testes e limites em [VALIDATION.md](VALIDATION.md).
+Publicado em Workers Static Assets com domínio, Access e D1 reais. Procedimento reproduzível e metadados em [DEPLOY.md](DEPLOY.md) e `.env.example`; o token nunca deve ser salvo nesses arquivos. Resultado dos testes e limites em [VALIDATION.md](VALIDATION.md).

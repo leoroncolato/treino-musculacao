@@ -1,6 +1,6 @@
-# Publicação — somente após autorização expressa
+# Publicação do Treino Bella
 
-Destino: `https://treino.leonardoroncolato.com.br`. Nenhum recurso remoto foi criado, nenhum DNS foi alterado e nenhum deploy foi executado nesta entrega.
+Publicado com autorização em 2026-11-10: https://treino.leonardoroncolato.com.br. Recursos, verificações e pendências em [DEPLOYMENT_REPORT.md](DEPLOYMENT_REPORT.md). Novas publicações devem respeitar o escopo autorizado.
 
 ## Ferramentas e ambientes
 
@@ -13,10 +13,10 @@ Projeto criado com `cf init . --no-install`, `cf@1.0.0-beta.28`. Usa `cloudflare
 
 ## Pré-requisitos da conta
 
-Team domain informado pelo proprietário: `withered-heart-8f5a.cloudflareaccess.com`, já configurado como padrão de produção. O AUD da aplicação Access e o ID do D1 ainda precisam ser obtidos na conta. A publicação foi autorizada em 2026-11-10; a autenticação administrativa continua necessária.
+Team domain informado pelo proprietário: `withered-heart-8f5a.cloudflareaccess.com`, já configurado como padrão de produção. O AUD e o ID real do D1 foram confirmados na conta e estão em `.env.example` (metadados, não credenciais). O token administrativo permanece exclusivamente no secret do ambiente.
 
 1. Confirmar acesso autorizado à conta Cloudflare e à zona `leonardoroncolato.com.br`. Autenticar via `npx cf auth login` no ambiente de publicação. Não versionar credenciais; um token de CI, se necessário, fica no gerenciador de secrets.
-2. Após autorização para provisionamento, criar um banco D1 chamado `treino-bella` pela interface Cloudflare. Conferir limites/custos antes de criar. Copiar apenas o identificador do banco.
+2. Reutilizar o banco D1 `treino-bella` existente, identificado em `.env.example`. Não criar outro banco para este deploy.
 3. Ativar o login **One-time PIN** no Zero Trust → Settings/Authentication → Login methods.
 4. Criar aplicação Access **Self-hosted**, com domínio `treino.leonardoroncolato.com.br` e caminho `/api/*`. Isso inclui `/api/sync/*`, login e qualquer endpoint futuro de histórico. A raiz `/` e os assets permanecem públicos. Não adicionar aplicação abrangendo todo o domínio.
 5. Adicionar a política Allow de `config/access-policy.json`: **Emails → correspondência exata** com o e-mail especificado. Não usar Everyone, domínio de e-mail, Bypass nem Service Auth como atalhos. A ausência de outras políticas permite negar os demais usuários. Habilitar somente One-time PIN; duração sugerida 24h. Não retornar e-mail em páginas públicas.
@@ -27,6 +27,9 @@ Team domain informado pelo proprietário: `withered-heart-8f5a.cloudflareaccess.
 
 ```sh
 npm ci
+# Na primeira preparação, copie .env.example para .env.live sem sobrescrever configurações existentes.
+source .env.live
+# Neste ambiente cloud: export XDG_CONFIG_HOME=/workspace/.bella-runtime
 npm run lint
 npm run typecheck
 npm test
@@ -52,4 +55,4 @@ A migração remota acima não usa `--local`; não confunda com `npm run db:loca
 - [ ] Dois dispositivos físicos: editar, sincronizar, provocar conflito, escolher versão, excluir e confirmar propagação.
 - [ ] Testar logout, expiração do token e ausência de dados privados em caches/CDN.
 
-**Esses testes em produção não foram executados.** As validações locais usam chaves RSA de teste e D1 simulado; não comprovam entrega de e-mail, configuração da conta, DNS ou certificado do domínio.
+As verificações públicas de produção, o One-time PIN, o escopo do Access, o DNS e o D1 foram conferidos. A conclusão do login com código e a sincronização autenticada em dispositivos reais exigem a participação do proprietário. Veja o estado atualizado em `DEPLOYMENT_REPORT.md`. Não use um token de serviço, bypass ou política Everyone para substituir esse teste.

@@ -1,6 +1,6 @@
 # Validação local — 2026-11-10
 
-Ambiente: Node 24.22.1, npm 11.9.0, Chromium local, `cf` beta com Vite Plugin, Miniflare/workerd. Nenhuma chamada de provisionamento ou publicação remota.
+Ambiente: Node 24.22.1, npm 11.9.0, Chromium local, `cf` beta com Vite Plugin, Miniflare/workerd. A execução original foi local; a publicação e as verificações remotas posteriores estão em [DEPLOYMENT_REPORT.md](DEPLOYMENT_REPORT.md).
 
 | Verificação         | Resultado                                                                                                     |
 | ------------------- | ------------------------------------------------------------------------------------------------------------- |
@@ -28,7 +28,11 @@ Corrigida a releitura de localStorage com metadados de sincronização, que inic
 
 O simulador emite aviso ao buscar metadados opcionais `Request.cf` em `workers.cloudflare.com` e usa fallback. A aplicação não utiliza esses metadados; o aviso não comprometeu os testes. Não se desativou TLS ou validação de assinaturas para contornar o aviso.
 
-## Ainda não validado em produção
+## Atualização de produção
+
+O deploy autorizado já ocorreu. HTTPS, ficha pública, proteção da API, política Access, provedor One-time PIN e D1 remoto foram inspecionados. Veja `DEPLOYMENT_REPORT.md` para separar resultados confirmados da validação autenticada que depende do código de e-mail do proprietário.
+
+## Limites da execução local original
 
 - Login OTP real e entrega do código ao e-mail autorizado.
 - Política Access real bloqueando outro e-mail na borda.
