@@ -1,0 +1,48 @@
+{
+  "name": "treino-bella",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cf dev",
+    "build": "cf build && node scripts/service-worker.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "preview": "vite preview --host 0.0.0.0",
+    "db:local": "cf d1 migrations apply 11111111-1111-4111-8111-111111111111 --local --persist-to .cloudflare/state",
+    "format": "prettier --write src worker tests scripts *.ts *.js *.json *.md"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "beta",
+    "@cloudflare/workers-types": "^5.20261110.1",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "cf": "^1.0.0-beta.28",
+    "eslint": "^10.14.0",
+    "miniflare": "^5.20261104.0-beta",
+    "prettier": "^3.9.10",
+    "tailwindcss": "^4.3.5",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.1.0"
+  },
+  "dependencies": {
+    "jose": "^6.2.17",
+    "lucide-react": "^1.71.0",
+    "motion": "^14.12.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
+  },
+  "engines": {
+    "node": "^24.22.0"
+  }
+}

@@ -1,0 +1,1 @@
+Arquivos licenciados devem ser adicionados aqui e registrados em MEDIA_SOURCES.md. Nenhuma demonstração não verificada é distribuída. Veja src/data/media.ts para o mapeamento.

@@ -1,0 +1,7 @@
+{
+  "name": "Treino Bella — proprietário",
+  "decision": "allow",
+  "include": [{ "email": { "email": "leonardo.p.froncolato@gmail.com" } }],
+  "exclude": [],
+  "require": []
+}
