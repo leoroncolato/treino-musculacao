@@ -1,6 +1,8 @@
 # Treino Bella
 
-**Em produção:** https://treino.leonardoroncolato.com.br — [relatório de publicação](DEPLOYMENT_REPORT.md).
+**Versão anterior em produção:** https://treino.leonardoroncolato.com.br — [relatório de publicação](DEPLOYMENT_REPORT.md).
+
+**Revisão de 2026-11-11:** ficha ampliada, nova paleta e demonstrações em todos os exercícios atuais. Alterações preparadas no rascunho; nenhuma nova publicação, migração remota ou alteração de DNS foi executada nesta revisão.
 
 Aplicação mobile-first para uma ficha pública de hipertrofia com histórico privado, registro local-first e sincronização D1 protegida por Cloudflare Access.
 
@@ -29,7 +31,7 @@ npm run test:e2e
 ## Uso
 
 - Escolha dia e semana do ciclo. Segunda e domingo são descanso.
-- Inicie uma sessão: séries são criadas com UUIDs estáveis. Semana 1–2 usa duas séries; depois, o volume da ficha. Séries unilaterais contam por lado.
+- Inicie uma sessão: séries são criadas com UUIDs estáveis. Todas as semanas usam as 3 ou 4 séries da ficha; semanas 1–2 mantêm aproximadamente 3 RIR, sem reduzir automaticamente as séries. Séries unilaterais contam por lado.
 - Registre kg, repetições, RIR, observações e conclusão de séries/exercício. Cada edição é persistida imediatamente em localStorage. Falhas de leitura/gravação são mostradas e não sobrescrevem o armazenamento corrupto.
 - Toque no descanso do exercício para carregar o cronômetro global. Inicie, pause, reinicie ou adicione 15 segundos. Continua ao navegar entre cartões/dias. Não precisa de áudio; não sobrevive a fechar a página.
 - Finalize para registrar duração estimada desde o início; pode editar minutos e data. Histórico permite reabrir, editar e excluir. Limpar e excluir exigem confirmação.
@@ -39,13 +41,21 @@ npm run test:e2e
 
 ## Treino e volume
 
-Ficha completa e progressão em `src/data/workout.ts`, exibidas em “Plano & evolução”. Cinco dias: terça quadríceps, quarta superior A + dead bug, quinta glúteos, sexta superior B + Pallof, sábado posteriores. Hack somente se confortável; alternativa estável na própria ficha. Sem stiff, terra romeno, agachamento livre ou búlgaro.
+Ficha completa e progressão em `src/data/workout.ts`, exibidas em “Plano & evolução”. Cinco dias: terça quadríceps, quarta superior A + dead bug, quinta glúteos, sexta superior B + Pallof, sábado posteriores. Smith na terça somente se confortável; alternativa estável na própria ficha. Sem stiff, terra romeno, agachamento livre ou búlgaro.
 
-O programa é uma base conservadora para iniciante/retorno, não avaliação individual presencial. Volume inicial reduzido, cerca de 3 RIR; após adaptação, 1–3 RIR e progressão dupla. Nos compostos, não buscar falha; nos isoladores, aproximação somente com técnica segura. Em fadiga persistente, reduzir volume e reavaliar. Dor implica interromper o movimento e procurar orientação.
+A ficha foi ampliada conforme a experiência informada: exercícios de 2 séries passaram a 3 e os de 3 passaram a 4. Não substitui avaliação presencial. Nas semanas 1–2, adapte a carga ao novo volume com aproximadamente 3 RIR; depois, use 1–3 RIR e progressão dupla. Compostos sem falha; isoladores só próximos da falha com técnica segura. Dor implica interromper o movimento. Se a recuperação piorar, reduza temporariamente o volume e procure orientação.
 
-Planeje blocos de 50–70 min incluindo aquecimento, ajustes das máquinas, musculação e desaceleração. Os dias de inferiores com menos exercícios podem terminar antes, especialmente na adaptação: não acrescente séries só para preencher tempo. Cardio opcional após superiores, 10–20 min, reduzido/omitido quando necessário para respeitar 70 min. A programação mantém os cinco dias mesmo com volume conservador.
+| Dia    | Exercícios | Séries válidas | Organização                                                                                                                 |
+| ------ | ---------- | -------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Terça  | 5          | 17             | Smith, extensora, panturrilha cavalinho sentada, leg press 45°, adutora                                                     |
+| Quarta | 7          | 23             | Desenvolvimento, puxada pronada pela frente, francês, lateral sentada, rosca alternada sentada, remada na máquina, dead bug |
+| Quinta | 5          | 17             | Glute drive, coice no cabo, abdutora, leg press unilateral, abdução no cabo                                                 |
+| Sexta  | 7          | 23             | Dois supinos em máquinas, remada, inverso, Scott, tríceps na barra, Pallof                                                  |
+| Sábado | 5          | 17             | Flexora sentada, deitada e unilateral em pé, extensão de quadril em máquina, panturrilha sentada                            |
 
-Séries diretas semanais após adaptação: quadríceps 9; posteriores 5; glúteo máximo 7 + contribuição do leg press/hack; abdutores 3; panturrilhas 6; costas 6; peito 5; ombros 6 + face pull; estabilização escapular 2 + remada/inverso; bíceps 4 + puxadas; tríceps 4 + supinos; core 4. Não somar trabalho indireto como equivalência exata. A progressão é selecionada manualmente, sem aumentar carga automaticamente.
+Planeje 50–70 minutos incluindo aquecimento e ajustes. Nos superiores, o peito recebe ênfase na sexta para acomodar os seis exercícios solicitados na quarta e o core. Remadas e crucifixo inverso trabalham a estabilidade escapular. O cardio de bicicleta/escada continua opcional, 10–20 minutos leves/moderados após superiores, reduzido ou omitido para respeitar 70 minutos; não encurte os descansos dos compostos para encaixá-lo.
+
+Volume direto aproximado: quadríceps 13; adutores 3; glúteo máximo 10 + compostos; glúteo médio 7; posteriores 10; panturrilhas 8; costas 12; peito 7; ombros 9; bíceps 6; tríceps 6; core 6. Nos unilaterais, conte séries por lado sem dobrar o total. Trabalho indireto não equivale a séries isoladas adicionais. As séries da ficha são geradas ao iniciar uma sessão; registros antigos continuam com os exercícios e a quantidade de séries que tinham.
 
 ## Persistência e conflitos
 
@@ -72,12 +82,18 @@ Privacidade: histórico de cada dispositivo está no seu navegador, sem criptogr
 | `config/access-policy.json`                    | Política Access reutilizável                      |
 | `tests/`                                       | Testes de segurança, banco, registros e navegador |
 
+`src/data/workout-legacy.ts` e `src/data/exercise-catalog.ts` preservam IDs e definições da ficha anterior. A API aceita apenas exercícios conhecidos no dia correspondente, incluindo os históricos, e continua validando identidade e propriedade em todas as operações. Não é necessária migração D1 para esta revisão.
+
 ## Dependências
 
 Runtime: React/React DOM (interface), Lucide React (ícones ISC), Motion (animações com redução de movimento), Zod (validação compartilhada), JOSE (JWT/JWKS). Desenvolvimento: Vite + plugin React, Cloudflare Vite Plugin e `cf`, TypeScript 6 (compatível com typescript-eslint), Tailwind 4, ESLint/typescript-eslint, Vitest, Playwright, Miniflare e tipos de Node/React/Workers. As versões exatas e transitivas estão no lockfile. R2 não foi adicionado: não há volume de mídia que o justifique.
 
 ## Mídias e publicação
 
-**Demonstrações pendentes:** todos os exercícios têm placeholder com orientação e link de referência. Nenhuma fotografia/GIF sem autoria/licença comprovadas foi copiada. Pesquisa e checklist em [MEDIA_SOURCES.md](MEDIA_SOURCES.md).
+**27 movimentos com vídeo:** 9 MP4 locais (CC BY-SA 4.0, aproximadamente 13 MB) e 18 players Vimeo com incorporação pública habilitada pelo autor. Créditos ficam nos cartões. Fontes, licenças, permissões e substituição em [MEDIA_SOURCES.md](MEDIA_SOURCES.md); evidência em `docs/media-evidence.json`.
 
-Publicado em Workers Static Assets com domínio, Access e D1 reais. Procedimento reproduzível e metadados em [DEPLOY.md](DEPLOY.md) e `.env.example`; o token nunca deve ser salvo nesses arquivos. Resultado dos testes e limites em [VALIDATION.md](VALIDATION.md).
+Toque em “Ver vídeo de execução”. Só uma mídia fica ativa; vídeos começam mudos e respeitam redução de movimento. Arquivos locais ficam disponíveis offline após o primeiro uso. Players externos precisam de internet e só recebem uma conexão após o toque, sem dados dos registros. O botão “Abrir na fonte” permanece disponível se uma mídia falhar.
+
+Para revisar os players reais, com um preview local aberto e internet: `node scripts/check-media.mjs`. Esse teste opcional reproduz os vídeos pelo player oficial, sem baixar os arquivos. Resultados e capturas de revisão ficam em `test-results/media-review/`, ignorados pelo Git. Os testes regulares usam um player simulado para serem determinísticos, além de reproduzirem os MP4 reais.
+
+A versão anterior foi publicada em Workers Static Assets com domínio, Access e D1 reais. O proprietário confirmou login e sincronização em dois dispositivos nesta conversa. Esta revisão não foi publicada. Procedimento reproduzível e metadados em [DEPLOY.md](DEPLOY.md) e `.env.example`; o token nunca deve ser salvo nesses arquivos. Resultado dos testes e limites em [VALIDATION.md](VALIDATION.md).

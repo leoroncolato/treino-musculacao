@@ -28,7 +28,13 @@ test("public workout, private API, logging, timer, backups and offline reload", 
     })
     .check();
   await page.locator("summary").first().click();
-  await expect(page.getByText("Demonstração em revisão").first()).toBeVisible();
+  await expect(
+    page
+      .locator(".exercise-card")
+      .first()
+      .getByRole("button", { name: "Ver vídeo de execução" }),
+  ).toBeVisible();
+  await expect(page.locator(".session-progress")).toContainText("1/17 séries");
   await page
     .getByRole("button", { name: "Iniciar descanso", exact: true })
     .click();

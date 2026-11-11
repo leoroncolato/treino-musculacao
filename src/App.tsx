@@ -14,6 +14,7 @@ import {
   X,
 } from "lucide-react";
 import { workouts, progression, volumes } from "./data/workout";
+import { exercisesForSession } from "./data/exercise-catalog";
 import { localDate } from "./lib/storage";
 import { useRecords } from "./lib/useRecords";
 import {
@@ -70,6 +71,9 @@ export default function App() {
     (r) =>
       r.session_id === sessionId && !r.deleted_at && r.exercise !== "__session",
   );
+  const exercises = session
+    ? exercisesForSession(day, current)
+    : (workout?.exercises ?? []);
   const complete = current.filter((r) => r.completed).length;
   const total = current.length;
   const sessions = store.records
@@ -99,7 +103,7 @@ export default function App() {
       ...list,
       root,
       ...workout.exercises.flatMap((e) =>
-        Array.from({ length: week <= 2 ? 2 : e.sets }, (_, i) =>
+        Array.from({ length: e.sets }, (_, i) =>
           makeRecord(day, id, e.id, i + 1),
         ),
       ),
@@ -293,7 +297,7 @@ export default function App() {
                       <p>{workout.focus}</p>
                     </div>
                     <span className="session-count">
-                      {String(workout.exercises.length).padStart(2, "0")}
+                      {String(exercises.length).padStart(2, "0")}
                       <small>EXERCÍCIOS</small>
                     </span>
                   </div>
@@ -352,7 +356,7 @@ export default function App() {
                       </label>
                     </div>
                   )}
-                  {workout.exercises.map((e, index) => (
+                  {exercises.map((e, index) => (
                     <motion.article
                       key={`${day}-${e.id}`}
                       className="exercise-card"
@@ -378,7 +382,7 @@ export default function App() {
                       </div>
                       <div className="prescription">
                         <div>
-                          <b>{week <= 2 ? 2 : e.sets}</b>
+                          <b>{e.sets}</b>
                           <span>SÉRIES</span>
                         </div>
                         <div>
@@ -398,10 +402,16 @@ export default function App() {
                           <span>DESCANSO ↗</span>
                         </button>
                       </div>
+                      <ExerciseMedia
+                        id={e.id}
+                        active={activeMedia === e.id}
+                        onActivate={() =>
+                          setActiveMedia(activeMedia === e.id ? "" : e.id)
+                        }
+                      />
                       <details>
                         <summary>
-                          Execução, alternativa e demonstração{" "}
-                          <ChevronDown size={16} />
+                          Como executar e cuidados <ChevronDown size={16} />
                         </summary>
                         <div className="instructions">
                           <p>{e.instruction}</p>
@@ -418,13 +428,6 @@ export default function App() {
                             <b>Auxiliares:</b>{" "}
                             {e.secondary.join(", ") || "Movimento isolado"}.
                           </p>
-                          <ExerciseMedia
-                            id={e.id}
-                            active={activeMedia === e.id}
-                            onActivate={() =>
-                              setActiveMedia(activeMedia === e.id ? "" : e.id)
-                            }
-                          />
                         </div>
                       </details>
                       {session && (
@@ -756,9 +759,10 @@ export default function App() {
                 ))}
                 <h3>Volume semanal aproximado</h3>
                 <p className="muted">
-                  Séries válidas nas semanas 3–8. Compostos contribuem para
-                  vários músculos; não some como séries isoladas equivalentes.
-                  Nas semanas 1–2, são 2 séries por exercício.
+                  Séries válidas com a ficha completa, desde a primeira semana.
+                  Em exercícios unilaterais, a contagem é por lado, sem dobrar o
+                  volume. Compostos também envolvem músculos auxiliares; não
+                  some essa contribuição como séries isoladas equivalentes.
                 </p>
                 <div className="volume-grid">
                   {volumes.map(([g, v]) => (
@@ -769,10 +773,10 @@ export default function App() {
                   ))}
                 </div>
                 <p>
-                  Nos superiores, reserve 45–55 min para musculação. Cardio é
-                  opcional: 10–20 min de bicicleta ou escada leve/moderada,
-                  preferencialmente depois dos superiores. Encurte ou omita para
-                  não ultrapassar 70 min.
+                  Com o volume ampliado, reserve 50–65 min para musculação,
+                  aquecimento e ajustes. Cardio é opcional: 10–20 min de
+                  bicicleta ou escada leve/moderada, preferencialmente depois
+                  dos superiores. Encurte ou omita para não ultrapassar 70 min.
                 </p>
               </>
             )}

@@ -1,6 +1,6 @@
 import { identity, type AuthEnv } from "./auth";
 import { recordSchema, type RecordData } from "../src/lib/records";
-import { workouts } from "../src/data/workout";
+import { isKnownExercise } from "../src/data/exercise-catalog";
 import { z } from "zod";
 export interface Env extends AuthEnv {
   DB: D1Database;
@@ -58,11 +58,9 @@ export async function sync(
     .safeParse(JSON.parse(body));
   if (!parsed.success) return json({ error: "invalid_records" }, 400);
   for (const r of parsed.data.records) {
-    const day = workouts.find((w) => w.day === r.day)!;
     if (
       (r.exercise !== "__session" &&
-        (!day.exercises.some((e) => e.id === r.exercise) ||
-          r.set_number < 1)) ||
+        (!isKnownExercise(r.day, r.exercise) || r.set_number < 1)) ||
       (r.exercise === "__session" && r.set_number !== 0)
     )
       return json({ error: "invalid_exercise" }, 400);

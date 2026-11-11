@@ -55,4 +55,4 @@ A migração remota acima não usa `--local`; não confunda com `npm run db:loca
 - [ ] Dois dispositivos físicos: editar, sincronizar, provocar conflito, escolher versão, excluir e confirmar propagação.
 - [ ] Testar logout, expiração do token e ausência de dados privados em caches/CDN.
 
-As verificações públicas de produção, o One-time PIN, o escopo do Access, o DNS e o D1 foram conferidos. A conclusão do login com código e a sincronização autenticada em dispositivos reais exigem a participação do proprietário. Veja o estado atualizado em `DEPLOYMENT_REPORT.md`. Não use um token de serviço, bypass ou política Everyone para substituir esse teste.
+As verificações públicas de produção, o One-time PIN, o escopo do Access, o DNS e o D1 foram conferidos. O proprietário confirmou a sincronização autenticada em dois dispositivos reais para a versão publicada. A revisão de ficha e mídias de 2026-11-11 ainda não foi publicada e não exige nova migração D1. Veja o estado atualizado em `DEPLOYMENT_REPORT.md`. Não use um token de serviço, bypass ou política Everyone para substituir esse teste.

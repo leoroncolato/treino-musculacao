@@ -23,6 +23,13 @@ export interface Media {
   src?: string;
   poster?: string;
   alt: string;
-  type: "image" | "video" | "animated";
+  type: "image" | "video" | "animated" | "embed";
   reference: string;
+  author?: string;
+  license?: string;
+  licenseUrl?: string;
+  note?: string;
+  frames?: string[];
+  provider?: "youtube" | "vimeo";
+  videoId?: string;
 }

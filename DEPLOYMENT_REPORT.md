@@ -40,7 +40,7 @@ O outro aplicativo Access e os três Workers existentes foram comparados antes/d
 - Navegador: link de entrada abre `Sign in · Cloudflare Access`, formulário de e-mail e botão `Send login code` no domínio Zero Trust correto.
 - A API do Worker valida JWT/identidade independentemente da proteção na borda; não há rota de bypass para testes em produção.
 
-**Limite:** os testes de sincronização automatizados usam D1 local. A conclusão do login OTP, entrega do código e sincronização autenticada em dois dispositivos reais aguardam a confirmação do proprietário. Não foi inventada uma identidade nem alterada a política para simular sucesso em produção.
+**Confirmação posterior do proprietário:** “Sincronizou nos dois dispositivos”, após o fluxo real de login solicitado nesta conversa. Essa confirmação se refere à versão publicada acima. Os testes automatizados continuam usando D1 local; nenhuma identidade foi inventada e nenhuma política foi reduzida.
 
 ## Ocorrências, camada e correção
 
@@ -54,6 +54,6 @@ O outro aplicativo Access e os três Workers existentes foram comparados antes/d
 
 ## Pendências e operação
 
-1. Proprietário concluir OTP e conferir sincronização nos dois dispositivos pela interface. Não enviar código ou token pelo chat. Resultado será incorporado quando confirmado.
-2. Mídias demonstrativas continuam como placeholders, sem distribuição de arquivos externos não verificados. Pesquisa e pendências em `MEDIA_SOURCES.md`.
-3. Para futuras publicações, carregar `.env.live` e seguir `DEPLOY.md`, usando somente o escopo autorizado. O token deve manter acesso apenas à conta/zona necessárias. Não criar recursos nem alterar DNS de outros projetos.
+1. Login e sincronização em dois dispositivos confirmados pelo proprietário para esta versão.
+2. A revisão de 2026-11-11 amplia a ficha, altera as cores e inclui vídeos nos 27 exercícios atuais. Está preparada no rascunho e **não foi publicada**. Resultados em `VALIDATION.md`; fontes em `MEDIA_SOURCES.md`.
+3. Não foram criados recursos Cloudflare, alterados registros DNS ou aplicadas migrações remotas nesta revisão. Uma próxima publicação usa os recursos existentes e o CLI `cf`, conforme `DEPLOY.md`, dentro da autorização vigente.

@@ -229,4 +229,29 @@ describe("real local D1 database", () => {
         .status,
     ).toBe(400);
   });
+  it("syncs edits to retired exercises without accepting arbitrary exercise IDs", async () => {
+    const old = {
+      ...base,
+      id: crypto.randomUUID(),
+      exercise: "hack",
+      load: 25,
+    };
+    const response = await sync(post([old]), binding, "historic-owner");
+    expect(response.status).toBe(200);
+    const result = (await response.json()) as { accepted: RecordData[] };
+    expect(result.accepted[0]).toMatchObject({
+      exercise: "hack",
+      load: 25,
+      version: 1,
+    });
+    expect(
+      (
+        await sync(
+          post([{ ...old, exercise: "shoulder" }]),
+          binding,
+          "historic-owner",
+        )
+      ).status,
+    ).toBe(400);
+  });
 });

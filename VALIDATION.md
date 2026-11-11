@@ -1,43 +1,50 @@
-# Validação local — 2026-11-10
+# Validação da revisão — 2026-11-11
 
-Ambiente: Node 24.22.1, npm 11.9.0, Chromium local, `cf` beta com Vite Plugin, Miniflare/workerd. A execução original foi local; a publicação e as verificações remotas posteriores estão em [DEPLOYMENT_REPORT.md](DEPLOYMENT_REPORT.md).
+Repositório: `/workspace/treino-musculacao`, branch local `work`, base `f10c99f`. O ambiente de execução respondeu a `pwd` e `git status` antes de qualquer alteração; o checkout estava limpo. Nenhum ambiente foi recriado.
 
-| Verificação         | Resultado                                                                                                     |
-| ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `npm run lint`      | Passou                                                                                                        |
-| `npm run typecheck` | Passou, incluindo Worker e configurações                                                                      |
-| `npm test`          | 6 testes passaram; nenhum desabilitado ou esperado-falhar                                                     |
-| `npm run build`     | Passou; Worker + Static Assets + shell offline gerados                                                        |
-| `npm run test:e2e`  | 4 testes passaram: dois cenários em mobile e desktop                                                          |
-| Migração D1 local   | Aplicada; repetição não reaplicou migração                                                                    |
-| Segredos            | Nenhum padrão de chave privada/token encontrado no código; arquivos de credenciais e saída ignorados pelo Git |
-| Bundle público      | E-mail autorizado ausente dos assets públicos                                                                 |
+A revisão foi implementada e validada localmente. **Nenhum deploy, push para `main`, alteração de DNS, mudança de Access ou migração D1 remota foi executado.** A versão anterior em produção e a confirmação do proprietário sobre sincronização em dois dispositivos estão em [DEPLOYMENT_REPORT.md](DEPLOYMENT_REPORT.md).
 
-## O que os testes exercitam
+## Resultado
 
-- JWT assinado RS256 com chave de teste: identidade correta aceita; outro e-mail, diferença de caixa, audiência errada, emissor errado, expiração e token forjado rejeitados. Header de e-mail isolado não autentica.
-- API anônima retorna 401 antes de tocar D1; raiz continua pública. Isolamento por `user_id`, rejeição de origem estranha e exercício inválido.
-- D1 real simulado pelo workerd/Miniflare: criação, leitura por outro cliente, atualização atômica por versão, conflito, repetição e exclusão lógica.
-- Duas instâncias independentes de navegador: registro em A, leitura em B, edições simultâneas, revisão explícita, convergência após sincronizar e propagação da exclusão. As rotas de teste chamam o handler real com D1 isolado e identidade fornecida **somente no harness de teste**; o Worker de produção sempre valida Access.
-- Navegador a 390×844 e 1440×1000: ficha pública, armazenamento após reload, exportação/importação JSON, funcionamento offline após instalar service worker, edição offline persistida, fluxo de login necessário, timer iniciar/pausar/reiniciar/adicionar tempo, placeholder e exclusão confirmada. Sem erros JavaScript capturados e sem overflow horizontal da página. Screenshots inspecionados em `test-results/` (ignorado pelo Git).
-- Esquema de backup e registros rejeita dados inválidos, preserva divergências; programa mantém os cinco dias e exclui movimentos proibidos.
+| Verificação                                            | Resultado                                                                                                          |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `npm run lint`                                         | Passou                                                                                                             |
+| `npm run typecheck`                                    | Passou                                                                                                             |
+| `npm test`                                             | 10 testes passaram, nenhum ignorado                                                                                |
+| `NODE_USE_ENV_PROXY=1 npm run test:e2e -- --workers=2` | 10 testes passaram: 5 cenários em mobile e desktop                                                                 |
+| `npm run build`                                        | Passou, Worker + Static Assets + shell offline; sem aviso de chunk acima de 500 kB                                 |
+| `node scripts/check-media.mjs`                         | 18 de 18 players externos reproduziram dentro do preview local, sem autenticação                                   |
+| Vídeos locais                                          | 9 arquivos MP4 H.264 válidos, 960×540, sem faixa de áudio, aproximadamente 13 MB no total; hashes registrados      |
+| Cobertura da ficha                                     | 27 movimentos distintos com vídeo; nenhuma mídia pendente na ficha atual                                           |
+| Privacidade                                            | API local anônima retorna 401; página pública abre; JWT/e-mail diferente rejeitados; D1 isolado por identidade     |
+| Credenciais                                            | Nenhum token/JWT/chave privada identificado nos arquivos versionáveis; e-mail autorizado ausente do bundle público |
+| Dependências                                           | Nenhuma dependência adicionada ou atualizada; configuração `cf` preservada                                         |
 
-## Correções durante validação
+## Cenários cobertos
 
-Corrigida a releitura de localStorage com metadados de sincronização, que inicialmente falhava no esquema estrito após reload. Ajustados schema/configuração para o CLI `cf` e Miniflare 5 atuais, diretórios graváveis e caminho real do build. Uma execução de testes sofreu timeout de inicialização durante carga temporária do ambiente; a execução final passou, com timeout de setup de 30s, sem remover as verificações.
+- Cinco dias, com 5/7/5/7/5 exercícios e 17/23/17/23/17 séries. Exercícios mantidos receberam exatamente +1 série; a semana inicial já cria 3 ou 4 séries, conforme a ficha. Core na quarta e sexta, sem movimentos excluídos.
+- Ficha histórica com hack e panturrilha no leg press continua abrindo com os nomes originais e duas séries registradas; edição persiste após reload. A API aceita exercícios históricos conhecidos no dia correto e rejeita IDs arbitrários. Nenhum registro antigo é reescrito.
+- Duas instâncias independentes de navegador usam o handler real com D1 isolado em Miniflare: criação, sincronização, edições simultâneas, escolha de conflito e propagação de exclusão lógica. A identidade de teste existe apenas no harness; produção exige Access.
+- Exportação e importação JSON, erros de validação, tombstones e preservação de versões conflitantes.
+- Registro local após reload online/offline, edição offline, fluxo de entrada quando não autenticado e cronômetro iniciar/pausar/reiniciar/adicionar tempo.
+- Reprodução real de MP4, pausa ao iniciar outro vídeo, reprodução offline após reload e leitura parcial `Range` retornando 206 com bytes corretos. Não são cacheados `/api/*` nem `/cdn-cgi/*`.
+- Players externos só são criados após clique; só um iframe permanece aberto. Testes regulares usam um player simulado para não depender da rede; a execução adicional `check-media.mjs` reproduziu os 18 players oficiais reais.
+- Redução de movimento sem autoplay, vídeos mudos com `playsInline`, aviso específico para vídeo externo offline e recuperação/link de fonte em arquivo ausente.
+- Viewports 390×844 e 1440×1000, sem overflow horizontal. Fundo computado `rgb(51, 29, 74)` (`#331d4a`), nova paleta e capturas inspecionadas.
 
-O simulador emite aviso ao buscar metadados opcionais `Request.cf` em `workers.cloudflare.com` e usa fallback. A aplicação não utiliza esses metadados; o aviso não comprometeu os testes. Não se desativou TLS ou validação de assinaturas para contornar o aviso.
+## Problemas encontrados e corrigidos
 
-## Atualização de produção
+| Evidência                                                                                    | Camada                                         | Correção                                                                                                                                                                                                                                                                                                     |
+| -------------------------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Página sem conteúdo após reload offline; `net::ERR_FAILED` nos JS/CSS                        | Service worker / cache de Static Assets        | Os assets públicos retornam `Vary: Origin`. Requisições de instalação e de módulos diferem nesse cabeçalho. Correspondência ignora `Vary` somente para os arquivos públicos conhecidos, no mesmo domínio. API e histórico seguem excluídos do cache. Os quatro testes que falharam passaram após a correção. |
+| Vídeos usam requisições `Range`, incompatíveis com armazenar respostas parciais em Cache API | Service worker / mídia                         | Guardar arquivo completo sob demanda e produzir respostas 206/416 para os intervalos; reprodução offline testada.                                                                                                                                                                                            |
+| Chunk principal acima de 500 kB                                                              | Build                                          | Separar React/Motion em chunk próprio, também incluído no cache offline. Entrada ~159 kB, vendor ~354 kB antes de gzip.                                                                                                                                                                                      |
+| Players pesquisados com `domain_status_code: 403`                                            | Permissão do provedor de vídeo                 | Fontes restritas foram descartadas. Foram escolhidos outros vídeos com incorporação pública e reprodução confirmada. Nenhuma restrição foi contornada.                                                                                                                                                       |
+| `document is not defined` no lint do script de auditoria                                     | Declaração de ambiente de callbacks Playwright | Declarar `document` apenas como global de navegador usado nas callbacks; lint final passou.                                                                                                                                                                                                                  |
 
-O deploy autorizado já ocorreu. HTTPS, ficha pública, proteção da API, política Access, provedor One-time PIN e D1 remoto foram inspecionados. Veja `DEPLOYMENT_REPORT.md` para separar resultados confirmados da validação autenticada que depende do código de e-mail do proprietário.
+## Limites e próxima publicação
 
-## Limites da execução local original
-
-- Login OTP real e entrega do código ao e-mail autorizado.
-- Política Access real bloqueando outro e-mail na borda.
-- D1 remoto, sessão em dois dispositivos físicos e expiração/logout reais do Access.
-- DNS, Custom Domain e certificado HTTPS.
-- Demonstrações licenciadas: placeholders em todos os exercícios; revisão de direitos e técnica pendente em `MEDIA_SOURCES.md`.
-
-Esses itens exigem configuração da conta e, para publicação/recursos/DNS, autorização expressa. Chaves RSA de teste e identidade do harness não substituem essas verificações. O checklist completo está em `DEPLOY.md`.
+- Players Vimeo dependem de internet e podem ser alterados/removidos pelo autor. Os 9 vídeos locais ficam disponíveis offline após o primeiro uso. Licenças, permissões e inventário estão em [MEDIA_SOURCES.md](MEDIA_SOURCES.md).
+- O teste externo foi realizado no preview local usando o player oficial. O domínio de produção ainda serve a versão anterior; após uma publicação autorizada, verificar também os vídeos e o cache no domínio real.
+- Login OTP e sincronização real em dois dispositivos foram confirmados pelo proprietário para a versão anterior. Não foram repetidos nesta revisão local; não houve acesso aos registros pessoais de produção.
+- Não há mudança de schema. O próximo deploy deve reutilizar D1, Access, domínio e variáveis existentes, seguindo [DEPLOY.md](DEPLOY.md).
