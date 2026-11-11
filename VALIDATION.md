@@ -2,7 +2,7 @@
 
 Repositório: `/workspace/treino-musculacao`, branch local `work`, base `f10c99f`. O ambiente de execução respondeu a `pwd` e `git status` antes de qualquer alteração; o checkout estava limpo. Nenhum ambiente foi recriado.
 
-A revisão foi implementada e validada localmente. **Nenhum deploy, push para `main`, alteração de DNS, mudança de Access ou migração D1 remota foi executado.** A versão anterior em produção e a confirmação do proprietário sobre sincronização em dois dispositivos estão em [DEPLOYMENT_REPORT.md](DEPLOYMENT_REPORT.md).
+A revisão foi implementada e validada localmente. Após aprovação expressa, foi enviada à `main` e publicada com o CLI `cf` em 11/11/2026, versão `eb020c73-4f31-4f65-b2da-9ebccf0ff552`. Não houve alteração de DNS, mudança de Access ou migração D1 remota. Validação do domínio, mídias, atualização do navegador e preservação de recursos em [DEPLOYMENT_REPORT.md](DEPLOYMENT_REPORT.md).
 
 ## Resultado
 
@@ -42,9 +42,9 @@ A revisão foi implementada e validada localmente. **Nenhum deploy, push para `m
 | Players pesquisados com `domain_status_code: 403`                                            | Permissão do provedor de vídeo                 | Fontes restritas foram descartadas. Foram escolhidos outros vídeos com incorporação pública e reprodução confirmada. Nenhuma restrição foi contornada.                                                                                                                                                       |
 | `document is not defined` no lint do script de auditoria                                     | Declaração de ambiente de callbacks Playwright | Declarar `document` apenas como global de navegador usado nas callbacks; lint final passou.                                                                                                                                                                                                                  |
 
-## Limites e próxima publicação
+## Produção e limites
 
 - Players Vimeo dependem de internet e podem ser alterados/removidos pelo autor. Os 9 vídeos locais ficam disponíveis offline após o primeiro uso. Licenças, permissões e inventário estão em [MEDIA_SOURCES.md](MEDIA_SOURCES.md).
-- O teste externo foi realizado no preview local usando o player oficial. O domínio de produção ainda serve a versão anterior; após uma publicação autorizada, verificar também os vídeos e o cache no domínio real.
-- Login OTP e sincronização real em dois dispositivos foram confirmados pelo proprietário para a versão anterior. Não foram repetidos nesta revisão local; não houve acesso aos registros pessoais de produção.
-- Não há mudança de schema. O próximo deploy deve reutilizar D1, Access, domínio e variáveis existentes, seguindo [DEPLOY.md](DEPLOY.md).
+- Os 18 players externos também reproduziram no domínio de produção após o deploy. Os 9 vídeos locais e posters foram conferidos por HTTP/MIME/hash. Reload offline, reprodução local e intervalos HTTP passaram no domínio real.
+- Login OTP e sincronização real em dois dispositivos foram confirmados pelo proprietário para a versão anterior. O formulário Access e o bloqueio da API foram verificados novamente após o deploy, sem solicitar código nem acessar registros pessoais. A sincronização autenticada remota não foi repetida nesta publicação.
+- Não houve mudança de schema. O deploy reutilizou D1, Access, domínio e variáveis existentes, seguindo [DEPLOY.md](DEPLOY.md).

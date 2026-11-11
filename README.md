@@ -1,8 +1,8 @@
 # Treino Bella
 
-**Versão anterior em produção:** https://treino.leonardoroncolato.com.br — [relatório de publicação](DEPLOYMENT_REPORT.md).
+**Em produção:** https://treino.leonardoroncolato.com.br — [relatório de publicação](DEPLOYMENT_REPORT.md).
 
-**Revisão de 2026-11-11:** ficha ampliada, nova paleta e demonstrações em todos os exercícios atuais. Alterações preparadas no rascunho; nenhuma nova publicação, migração remota ou alteração de DNS foi executada nesta revisão.
+**Revisão de 2026-11-11:** ficha ampliada, nova paleta e demonstrações em todos os exercícios atuais. Publicada com aprovação em 11/11/2026. Código e mídias enviados à `main`; nenhum recurso Cloudflare novo, migração remota ou alteração de DNS.
 
 Aplicação mobile-first para uma ficha pública de hipertrofia com histórico privado, registro local-first e sincronização D1 protegida por Cloudflare Access.
 
@@ -96,4 +96,4 @@ Toque em “Ver vídeo de execução”. Só uma mídia fica ativa; vídeos come
 
 Para revisar os players reais, com um preview local aberto e internet: `node scripts/check-media.mjs`. Esse teste opcional reproduz os vídeos pelo player oficial, sem baixar os arquivos. Resultados e capturas de revisão ficam em `test-results/media-review/`, ignorados pelo Git. Os testes regulares usam um player simulado para serem determinísticos, além de reproduzirem os MP4 reais.
 
-A versão anterior foi publicada em Workers Static Assets com domínio, Access e D1 reais. O proprietário confirmou login e sincronização em dois dispositivos nesta conversa. Esta revisão não foi publicada. Procedimento reproduzível e metadados em [DEPLOY.md](DEPLOY.md) e `.env.example`; o token nunca deve ser salvo nesses arquivos. Resultado dos testes e limites em [VALIDATION.md](VALIDATION.md).
+Esta revisão foi publicada em Workers Static Assets com domínio, Access e D1 reais. O proprietário confirmou login e sincronização em dois dispositivos na versão anterior; a atualização preserva a autenticação e os registros. Procedimento reproduzível e metadados em [DEPLOY.md](DEPLOY.md) e `.env.example`; o token nunca deve ser salvo nesses arquivos. Resultado dos testes e limites em [VALIDATION.md](VALIDATION.md).

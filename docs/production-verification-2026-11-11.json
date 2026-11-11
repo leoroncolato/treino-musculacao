@@ -1,0 +1,254 @@
+{
+  "checkedAt": "2026-11-11T23:42:47.298171+00:00",
+  "domain": "https://treino.leonardoroncolato.com.br",
+  "codeCommit": "e91836047c1ac7b4fe84137721f183c8023ae57c",
+  "bindingsVerified": {
+    "D1": true,
+    "Access team": true,
+    "Access audience": true,
+    "Owner authorization": true,
+    "No administrative token binding": true
+  },
+  "deployment": {
+    "id": "e35f2e23-2dec-4299-b481-fb56b1dc7466",
+    "created_on": "2026-11-11T23:38:19.055035Z",
+    "strategy": "percentage",
+    "versions": [
+      {
+        "version_id": "eb020c73-4f31-4f65-b2da-9ebccf0ff552",
+        "percentage": 100
+      }
+    ]
+  },
+  "preservation": {
+    "dns": true,
+    "apps": true,
+    "app": true,
+    "policies": true,
+    "idps": true,
+    "domains": true,
+    "subdomain": true,
+    "unrelatedWorkers": true,
+    "sameD1": true
+  },
+  "browserChecks": [
+    {
+      "name": "HTTPS and new public palette",
+      "result": "passed"
+    },
+    {
+      "name": "Existing browser retains previous-plan local session after upgrade",
+      "result": "passed"
+    },
+    {
+      "name": "New Tuesday creates 17 sets in week 1",
+      "result": "passed"
+    },
+    {
+      "name": "Anonymous /api/sync/records",
+      "status": 302,
+      "result": "blocked/Access login"
+    },
+    {
+      "name": "Anonymous /api/history",
+      "status": 302,
+      "result": "blocked/Access login"
+    },
+    {
+      "name": "Anonymous /api/sync/login",
+      "status": 302,
+      "result": "blocked/Access login"
+    },
+    {
+      "name": "Anonymous sync POST",
+      "status": 302,
+      "result": "blocked"
+    },
+    {
+      "name": "New service worker and narrow Vimeo CSP",
+      "result": "passed"
+    },
+    {
+      "name": "Production offline reload, local video replay and byte ranges",
+      "result": "passed"
+    },
+    {
+      "name": "All 9 public MP4 hashes, MIME types and posters",
+      "result": "passed"
+    },
+    {
+      "name": "Five updated training days with 5/7/5/7/5 exercises",
+      "result": "passed"
+    },
+    {
+      "name": "Real Access email-code login page",
+      "result": "passed; no code requested"
+    }
+  ],
+  "embeddedMedia": [
+    {
+      "id": "pronated",
+      "source": "https://vimeo.com/239667235",
+      "result": "played",
+      "currentTime": 0.208063,
+      "width": 640,
+      "height": 360,
+      "duration": 9.9
+    },
+    {
+      "id": "ext",
+      "source": "https://vimeo.com/358292331",
+      "result": "played",
+      "currentTime": 0.366979,
+      "width": 1920,
+      "height": 1080,
+      "duration": 16.282929
+    },
+    {
+      "id": "seatedlateral",
+      "source": "https://vimeo.com/258604618",
+      "result": "played",
+      "currentTime": 0.221,
+      "width": 1280,
+      "height": 720,
+      "duration": 62.72
+    },
+    {
+      "id": "alternating",
+      "source": "https://vimeo.com/1075104028",
+      "result": "played",
+      "currentTime": 0.214471,
+      "width": 720,
+      "height": 1280,
+      "duration": 13.266667
+    },
+    {
+      "id": "row",
+      "source": "https://vimeo.com/880974791",
+      "result": "played",
+      "currentTime": 0.292573,
+      "width": 720,
+      "height": 1280,
+      "duration": 24.566667000000002
+    },
+    {
+      "id": "deadbug",
+      "source": "https://vimeo.com/497389542",
+      "result": "played",
+      "currentTime": 0.215954,
+      "width": 1280,
+      "height": 720,
+      "duration": 43.626896
+    },
+    {
+      "id": "drive",
+      "source": "https://vimeo.com/400418443",
+      "result": "played",
+      "currentTime": 0.227011,
+      "width": 640,
+      "height": 360,
+      "duration": 189.38920000000002
+    },
+    {
+      "id": "kick",
+      "source": "https://vimeo.com/941256967",
+      "result": "played",
+      "currentTime": 0.20803,
+      "width": 540,
+      "height": 676,
+      "duration": 79.10000300000002
+    },
+    {
+      "id": "abduct",
+      "source": "https://vimeo.com/569011795",
+      "result": "played",
+      "currentTime": 0.217392,
+      "width": 1280,
+      "height": 720,
+      "duration": 20.6206
+    },
+    {
+      "id": "single",
+      "source": "https://vimeo.com/257405153",
+      "result": "played",
+      "currentTime": 0.222593,
+      "width": 640,
+      "height": 360,
+      "duration": 20.587229
+    },
+    {
+      "id": "cableabduct",
+      "source": "https://vimeo.com/1081438776",
+      "result": "played",
+      "currentTime": 0.225839,
+      "width": 720,
+      "height": 1280,
+      "duration": 31.400001
+    },
+    {
+      "id": "incline",
+      "source": "https://vimeo.com/388513094",
+      "result": "played",
+      "currentTime": 0.223729,
+      "width": 1280,
+      "height": 720,
+      "duration": 94.07999999999998
+    },
+    {
+      "id": "chest",
+      "source": "https://vimeo.com/user23896403/chestpressmachine",
+      "result": "played",
+      "currentTime": 0.232434,
+      "width": 480,
+      "height": 270,
+      "duration": 13.6136
+    },
+    {
+      "id": "reverse",
+      "source": "https://vimeo.com/243937113",
+      "result": "played",
+      "currentTime": 0.222573,
+      "width": 640,
+      "height": 360,
+      "duration": 62.366646
+    },
+    {
+      "id": "scott",
+      "source": "https://vimeo.com/551242680",
+      "result": "played",
+      "currentTime": 0.219998,
+      "width": 640,
+      "height": 360,
+      "duration": 26.200000000000003
+    },
+    {
+      "id": "pallof",
+      "source": "https://vimeo.com/155492276",
+      "result": "played",
+      "currentTime": 0.211932,
+      "width": 960,
+      "height": 540,
+      "duration": 58.992263
+    },
+    {
+      "id": "bartri",
+      "source": "https://vimeo.com/885198896",
+      "result": "played",
+      "currentTime": 0.218013,
+      "width": 640,
+      "height": 360,
+      "duration": 29.295933
+    },
+    {
+      "id": "hipmachine",
+      "source": "https://vimeo.com/227109343",
+      "result": "played",
+      "currentTime": 0.223944,
+      "width": 640,
+      "height": 360,
+      "duration": 12.3123
+    }
+  ],
+  "personalProductionDataAccessed": false,
+  "remoteSchemaChanged": false
+}
